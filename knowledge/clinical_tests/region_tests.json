@@ -1,0 +1,56 @@
+{
+  "Cột sống cổ": [
+    ["Spurling Test", "Đánh giá chèn ép rễ thần kinh cổ", "Nghiêng đầu về bên đau, ấn nhẹ đỉnh đầu xuống."],
+    ["Distraction Test", "Giảm áp lực rễ thần kinh cổ", "Kéo nhẹ đầu lên trên, quan sát giảm triệu chứng."],
+    ["Lhermitte Sign", "Đánh giá tổn thương tủy cổ", "Gập cổ, hỏi bệnh nhân có cảm giác điện giật."],
+    ["Vertebral Artery Test", "Đánh giá tuần hoàn động mạch đốt sống", "Xoay cổ tối đa, giữ 30 giây, quan sát chóng mặt."]
+  ],
+  "Cột sống thắt lưng": [
+    ["Lasègue Test", "Đánh giá chèn ép rễ L5-S1", "Nâng chân thẳng khi nằm ngửa, quan sát đau lan."],
+    ["Bragard Test", "Xác nhận Lasègue dương tính", "Sau Lasègue, gập bàn chân về phía trước."],
+    ["SLR Test", "Đánh giá căng dây thần kinh tọa", "Nâng chân thẳng đến khi có triệu chứng."],
+    ["FABER / Patrick Test", "Đánh giá khớp háng và cùng chậu", "Gập, dạng, xoay ngoài háng, ấn gối xuống."]
+  ],
+  "Khớp vai": [
+    ["Neer Test", "Đánh giá chạm dưới mỏm cùng vai", "Nâng thẳng tay qua đầu, ấn vai."],
+    ["Hawkins Test", "Đánh giá chạm dưới mỏm cùng vai", "Gập vai 90 độ, xoay trong tối đa."],
+    ["Jobe Test", "Đánh giá gân trên gai", "Dạng tay 90 độ, xoay trong, kháng lực nâng."],
+    ["Drop Arm Test", "Đánh giá rách chóp xoay", "Dạng tay 90 độ, thả tay từ từ."]
+  ],
+  "Khuỷu tay": [
+    ["Cozen Test", "Đánh giá viêm lồi cầu ngoài", "Nắm tay, duỗi cổ tay kháng lực."],
+    ["Mill Test", "Đánh giá viêm lồi cầu ngoài", "Gập cổ tay, sấp cẳng tay, duỗi khuỷu."],
+    ["Tinel ống khuỷu", "Đánh giá chèn ép thần kinh trụ", "Gõ vùng ống khuỷu, quan sát dị cảm."],
+    ["Valgus Stress Test", "Đánh giá dây chằng bên trong khuỷu", "Tạo lực valgus khi khuỷu gập 30 độ."]
+  ],
+  "Cổ tay – bàn tay": [
+    ["Phalen Test", "Đánh giá hội chứng ống cổ tay", "Gập cổ tay tối đa, giữ 60 giây."],
+    ["Tinel cổ tay", "Đánh giá hội chứng ống cổ tay", "Gõ vùng ống cổ tay, quan sát dị cảm."],
+    ["Finkelstein Test", "Đánh giá De Quervain", "Nắm ngón cái, gập cổ tay về phía ngón út."],
+    ["Watson Test", "Đánh giá dây chằng cổ tay", "Ấn xương thuyền, gập-duỗi cổ tay."]
+  ],
+  "Khớp háng": [
+    ["FADIR Test", "Đánh giá kẹp háng", "Gập 90 độ, khép, xoay trong háng."],
+    ["FABER / Patrick Test", "Đánh giá khớp háng và cùng chậu", "Gập, dạng, xoay ngoài háng."],
+    ["Thomas Test", "Đánh giá co rút gấp háng", "Nằm ngửa, gập một háng, quan sát háng kia."],
+    ["Trendelenburg Test", "Đánh giá cơ dạng háng", "Đứng một chân, quan sát khung chậu."]
+  ],
+  "Khớp gối": [
+    ["Lachman Test", "Đánh giá dây chằng chéo trước", "Gập gối 20-30 độ, kéo cẳng chân ra trước."],
+    ["McMurray Test", "Đánh giá sụn chêm", "Gập gối, xoay cẳng chân, duỗi dần."],
+    ["Valgus Stress Test", "Đánh giá dây chằng bên trong", "Tạo lực valgus khi gối gập 0 và 30 độ."],
+    ["Anterior Drawer Test", "Đánh giá dây chằng chéo trước", "Gập gối 90 độ, kéo cẳng chân ra trước."]
+  ],
+  "Cổ chân – bàn chân": [
+    ["Anterior Drawer cổ chân", "Đánh giá dây chằng ATFL", "Kéo bàn chân ra trước khi cổ chân gập 10-20 độ."],
+    ["Talar Tilt", "Đánh giá dây chằng CFL", "Nghiêng bàn chân vào trong khi cổ chân gập 10-20 độ."],
+    ["Thompson Test", "Đánh giá đứt gân Achilles", "Bóp bắp chân, quan sát gấp gan chân."],
+    ["Windlass Test", "Đánh giá cân gan chân", "Gập ngón cái, quan sát đau gót."]
+  ],
+  "Thần kinh và Khác": [
+    ["FAIR Test", "Đánh giá hội chứng cơ hình lê", "Gập, dạng, xoay trong háng khi nằm nghiêng."],
+    ["Pace Test", "Đánh giá hội chứng cơ hình lê", "Dạng và xoay ngoài háng khi ngồi."],
+    ["Freiberg Test", "Đánh giá hội chứng cơ hình lê", "Xoay trong háng khi nằm ngửa."],
+    ["Babinski Sign", "Đánh giá tổn thương neuron vận động trung ương", "Vuốt gan bàn chân, quan sát ngón cái duỗi."]
+  ]
+}
