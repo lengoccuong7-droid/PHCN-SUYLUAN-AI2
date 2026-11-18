@@ -1,0 +1,18 @@
+{
+  "name": "PHCN AI Offline Capture",
+  "short_name": "PHCN Offline",
+  "lang": "vi-VN",
+  "start_url": "/app/static/offline_capture.html",
+  "scope": "/app/static/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "background_color": "#f4f7f8",
+  "theme_color": "#166534"
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#166534"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.svg">
+<title>PHCN AI – Ghi nhận offline</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17212b;background:#f4f7f8}*{box-sizing:border-box}body{margin:0;padding:16px;max-width:850px;margin-inline:auto}.head{background:#14532d;color:#fff;padding:18px;border-radius:16px;margin-bottom:14px}.head h1{font-size:22px;margin:0 0 6px}.head p{margin:0;font-size:13px;opacity:.9}.card{background:#fff;border:1px solid #dce4e7;border-radius:14px;padding:14px;margin:12px 0}label{display:block;font-size:14px;font-weight:650;margin:12px 0 6px}input,select,textarea{width:100%;font:inherit;font-size:16px;padding:11px;border:1px solid #b8c4ca;border-radius:9px;background:#fff}textarea{min-height:82px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:10px;padding:12px 14px;font-size:15px;font-weight:700;background:#166534;color:#fff;width:100%;margin-top:12px}.btn.secondary{background:#e7eef0;color:#16313c}.note{font-size:13px;color:#52636b;line-height:1.5}.record{padding:10px 0;border-bottom:1px solid #e6ecef}.record:last-child{border:0}.tag{font-size:12px;background:#e7f4eb;color:#14532d;padding:3px 7px;border-radius:20px}.danger{background:#fff4e5;color:#7c3e00;padding:10px;border-radius:9px;font-size:13px;line-height:1.45}@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="head"><h1>🩺 PHCN AI – Ghi nhận offline</h1><p>Phiếu ghi nhận cục bộ trên thiết bị · Không gửi dữ liệu lên máy chủ khi đang offline</p></header>
+<div class="danger">Công cụ này chỉ lưu ghi nhận thô trong trình duyệt. Không phân tích hoặc đưa ra chẩn đoán khi offline. Khi có kết nối, xuất JSON và nhập vào PHCN AI 4.1 để phân tích. Tránh ghi thông tin định danh nếu không cần thiết.</div>
+<form id="caseForm" class="card">
+<label>Mã hồ sơ nội bộ (không dùng số giấy tờ)</label><input id="patient" placeholder="Ví dụ: PHCN-001" required>
+<label>Vùng khám</label><select id="region"><option>Cột sống cổ</option><option>Cột sống thắt lưng</option><option>Khớp vai</option><option>Khuỷu tay</option><option>Cổ tay – bàn tay</option><option>Khớp háng</option><option>Khớp gối</option><option>Cổ chân – bàn chân</option><option>Thần kinh & Khác</option></select>
+<label>Lý do khám</label><textarea id="reason"></textarea>
+<label>Bệnh sử / triệu chứng (ghi tự do)</label><textarea id="history"></textarea>
+<div class="grid"><div><label>Vị trí triệu chứng</label><textarea id="site"></textarea></div><div><label>Khởi phát</label><textarea id="onset"></textarea></div></div>
+<div class="grid"><div><label>Tính chất</label><textarea id="character"></textarea></div><div><label>Hướng lan</label><textarea id="radiation"></textarea></div></div>
+<label>Triệu chứng đi kèm / yếu tố tăng giảm</label><textarea id="associations"></textarea>
+<label>Diễn tiến</label><textarea id="course"></textarea>
+<label>Khám nhìn</label><textarea id="inspection"></textarea>
+<label>Khám sờ</label><textarea id="palpation"></textarea>
+<label>ROM / MMT / chức năng</label><textarea id="rom_mmt"></textarea>
+<label>Kết quả nghiệm pháp (JSON, ví dụ {"Lachman Test":"Dương tính"})</label><textarea id="tests" placeholder='{"Tên nghiệm pháp":"Chưa thực hiện"}'></textarea>
+<label>Cờ đỏ đã sàng lọc (JSON, ví dụ {"Rối loạn cơ tròn":false})</label><textarea id="red_flags" placeholder='{}'></textarea>
+<button class="btn" type="submit">Lưu phiếu trên thiết bị</button>
+</form>
+<section class="card"><h2 style="font-size:18px;margin-top:0">Phiếu đang lưu trên thiết bị</h2><div id="records" class="note">Đang tải...</div><button id="export" class="btn" type="button">Xuất các phiếu thành JSON</button><button id="clear" class="btn secondary" type="button">Xóa toàn bộ phiếu trên thiết bị</button></section>
+<p class="note">Để dùng offline: mở trang này khi có mạng ít nhất một lần, chờ trình duyệt lưu bộ đệm, sau đó có thể thêm vào Màn hình chính. Dữ liệu chỉ nằm trên trình duyệt/thiết bị này; xóa dữ liệu trình duyệt có thể làm mất phiếu chưa xuất.</p>
+<script>
+const DB_NAME='phcn_ai_offline_v1';let db;
+function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('records'))d.createObjectStore('records',{keyPath:'id'});};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+function store(mode,fn){return new Promise((resolve,reject)=>{const tx=db.transaction('records',mode);const os=tx.objectStore('records');const req=fn(os);tx.oncomplete=()=>resolve(req?.result);tx.onerror=()=>reject(tx.error);});}
+async function allRecords(){return store('readonly',os=>os.getAll());}
+async function refresh(){const rows=await allRecords();const el=document.getElementById('records');if(!rows.length){el.textContent='Chưa có phiếu nào.';return;}el.innerHTML=rows.sort((a,b)=>b.created_at.localeCompare(a.created_at)).map(r=>`<div class="record"><b>${escapeHtml(r.patient_label)}</b> · ${escapeHtml(r.case_data.region)}<br><span class="tag">Chưa đồng bộ</span> <span>${new Date(r.created_at).toLocaleString('vi-VN')}</span></div>`).join('');}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function parseObj(id,label){const raw=document.getElementById(id).value.trim();if(!raw)return {};try{return JSON.parse(raw);}catch(e){throw new Error(label+' phải là JSON hợp lệ.');}}
+document.getElementById('caseForm').addEventListener('submit',async e=>{e.preventDefault();try{const token=document.getElementById('patient').value.trim();if(!token)throw new Error('Cần mã hồ sơ.');const data={region:document.getElementById('region').value};for(const k of ['reason','history','site','onset','character','radiation','associations','course','inspection','palpation','rom_mmt'])data[k]=document.getElementById(k).value.trim();data.tests=parseObj('tests','Kết quả nghiệm pháp');data.red_flags=parseObj('red_flags','Cờ đỏ');const record={id:crypto.randomUUID(),schema_version:'1.0',created_at:new Date().toISOString(),patient_token:token,patient_label:token,case_data:data};await store('readwrite',os=>os.put(record));e.target.reset();await refresh();alert('Đã lưu cục bộ trên thiết bị.');}catch(err){alert(err.message);}});
+document.getElementById('export').addEventListener('click',async()=>{const rows=await allRecords();if(!rows.length){alert('Chưa có phiếu để xuất.');return;}const blob=new Blob([JSON.stringify({app:'PHCN AI 4.1',schema_version:'1.0',records:rows},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='phcn_ai_offline_records.json';a.click();URL.revokeObjectURL(url);});
+document.getElementById('clear').addEventListener('click',async()=>{if(!confirm('Xóa toàn bộ phiếu đã lưu trên thiết bị? Hãy chắc chắn đã xuất dữ liệu cần giữ.'))return;await store('readwrite',os=>os.clear());await refresh();});
+openDB().then(async d=>{db=d;await refresh();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});}).catch(e=>{document.getElementById('records').textContent='Trình duyệt không hỗ trợ lưu trữ offline: '+e.message;});
+</script></body></html>
