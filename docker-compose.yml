@@ -1,0 +1,13 @@
+services:
+  phcn-ai:
+    build: .
+    container_name: phcn-ai-4
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PHCN_DB_PATH: /app/data/phcn_ai.db
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
